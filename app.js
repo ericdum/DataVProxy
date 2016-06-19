@@ -9,27 +9,8 @@ var koaBody    = require('koa-body')();
 var crypto     = require('crypto');
 
 app.on('error', function (err) {
-  if (err.redirect) {
-    this.redirect(err.redirect);
-  } else if(err == 401){
-    this.status = 401;
-    this.body = 'Unauthorized'
-  }else if(err == 404) {
-    this.status = 404;
-    this.body = 'Not Found';
-  } else if(typeof err == 'string') {
-    console.log(err)
-    var data = {
-      isError: true,
-      message: err
-    }
-    this.body = JSON.stringify(data);
-  } else {
-    this.status = 500;
-    this.body = err.message || 'Server Error';
-    console.error(err.stack)
-  }
-
+  console.log(err)
+  console.log(err.stack)
 });
 
 app.use(function *(next) {
@@ -43,6 +24,8 @@ app.use(function *(next) {
 router.get('/database', function *() {
   var key  = this.query.query;
   var data = decrypt(key);
+
+  if (!data) return this.status = 401;
 
   this.body = yield DataCenter.get({
     type: 'database'
@@ -83,12 +66,16 @@ function decrypt(data) {
   decipher = crypto.createDecipheriv('aes-256-cbc', new Buffer(config.key, 'binary'), new Buffer(config.secret, 'binary'));
   decipher.setAutoPadding(true);
   cipherChunks.push(decipher.update(data, 'base64', 'utf8'));
-  cipherChunks.push(decipher.final('utf8'));
+  try {
+    cipherChunks.push(decipher.final('utf8'));
+  } catch (e) {
+    return false;
+  }
   data = cipherChunks.join('');
   try {
     return JSON.parse(data);
   } catch(e) {
-    return {};
+    return false;
   }
 }
 
