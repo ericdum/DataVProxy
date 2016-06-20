@@ -6,7 +6,6 @@ class Mysql {
   constructor(config) {
     var self = this;
     this.api = config.name;
-    console.log(config)
     this.conn = mysql.createPool({
       host: config.host,
       port: config.port,

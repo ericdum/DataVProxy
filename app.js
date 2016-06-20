@@ -2,6 +2,7 @@
 
 var DataCenter = require('./core');
 var config     = require('./config');
+var accesslog  = require('./core/accesslog');
 var graceful   = require('graceful');
 var app        = require('koa')();
 var router     = require('koa-router')();
@@ -9,10 +10,11 @@ var koaBody    = require('koa-body')();
 var crypto     = require('crypto');
 
 app.on('error', function (err) {
-  console.log(err)
-  console.log(err.stack)
+  console.error(err)
+  console.error(err.stack)
 });
 
+app.use(accesslog());
 app.use(function *(next) {
   if (this.request.header.origin && this.request.header.origin.match(/datav.aliyun.com(:\d+)?/)) {
     this.set('Access-Control-Allow-Origin', '*')
