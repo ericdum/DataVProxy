@@ -23,12 +23,36 @@ app.use(function *(next) {
   yield next;
 });
 
+app.use(function *exceptionHandler(next){
+  try {
+    yield next;
+  } catch(err) {
+    if (err.redirect) {
+      this.redirect(err.redirect);
+    } else if(err*1 == err){
+      this.status = err;
+    } else if(typeof err == 'string') {
+      var data = {
+        isError: true,
+        message: err
+      }
+      this.body = JSON.stringify(data);
+    } else {
+      console.error(err.stack);
+      this.status = 500;
+      this.body = err.message || 'Server Error';
+    }
+  }
+});
+
 router.get('/database', function *() {
-  var key  = this.query.id;
-  var time = parseInt(this.query.time);
+  var key  = this.query._datav_id;
+  var time = parseInt(this.query._datav_time);
   var data = decrypt(key, time);
 
   if (!data) return this.status = 401;
+  delete this.query._datav_id;
+  delete this.query._datav_time;
 
   this.body = yield DataCenter.get({
     type: 'database',
