@@ -24,16 +24,17 @@ app.use(function *(next) {
 });
 
 router.get('/database', function *() {
-  var key  = this.query.query;
-  var data = decrypt(key);
+  var key  = this.query.id;
+  var time = parseInt(this.query.time);
+  var data = decrypt(key, time);
 
   if (!data) return this.status = 401;
 
   this.body = yield DataCenter.get({
-    type: 'database'
-    ,config: {
-      sql: data.sql
-      ,storage: findDB(data.db)
+    type: 'database',
+    config: {
+      sql: data.sql,
+      storage: findDB(data.db)
     }
   }, this.query);
 })
@@ -61,11 +62,16 @@ graceful({
 });
 
 
-function decrypt(data) {
+function decrypt(data, time) {
+  var vp = 60; // 一分钟有效期
+  if (new Date().getTime()/1000 > time + vp) {
+    return false;
+  }
+  var key = time + config.key.substr(time.toString().length)
   var cipherChunks, decipher;
   cipherChunks = [];
   data = data.replace(/ /g, '+');
-  decipher = crypto.createDecipheriv('aes-256-cbc', new Buffer(config.key, 'binary'), new Buffer(config.secret, 'binary'));
+  decipher = crypto.createDecipheriv('aes-256-cbc', new Buffer(key, 'binary'), new Buffer(config.secret, 'binary'));
   decipher.setAutoPadding(true);
   cipherChunks.push(decipher.update(data, 'base64', 'utf8'));
   try {
