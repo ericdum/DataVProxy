@@ -58,11 +58,14 @@ router.get('/database', function *() {
   delete this.query._datav_id;
   delete this.query._datav_time;
 
+  var db = findDB(data.db)
+  if (!db) throw "数据库不存在：" + data.db;
+
   this.body = yield DataCenter.get({
     type: 'database',
     config: {
       sql: data.sql,
-      storage: findDB(data.db)
+      storage: db
     }
   }, this.query);
 })
@@ -90,8 +93,7 @@ graceful({
 });
 
 function decrypt(data, time) {
-  var vp = 60; // 一分钟有效期
-  if (new Date().getTime()/1000 > time + vp) {
+  if (new Date().getTime()/1000 > time + config.expired) {
     return false;
   }
   var key = time + config.key.substr(time.toString().length)
@@ -107,6 +109,7 @@ function decrypt(data, time) {
     return false;
   }
   data = cipherChunks.join('');
+  console.log(data);
   try {
     return JSON.parse(data);
   } catch(e) {

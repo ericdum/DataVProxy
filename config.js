@@ -1,5 +1,6 @@
 module.exports = {
   port   : 9998,
+  expired: 60, // 60 秒过期校验
   key    : 'o4gx5n6330pxy4ojo4gx5n6330pxy4oj', //32位
   secret : 'pch3gtpxi4urfz5u', //16位
 

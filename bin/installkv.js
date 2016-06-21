@@ -1,6 +1,6 @@
 var fs   = require('fs');
 var path = require('path');
-var RT   = require('random-token').create('abcdefghijklmnopqrstuvwxzyABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%')
+var RT   = require('random-token').create('abcdefghijklmnopqrstuvwxzyABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%');
 
 var key = RT(32);
 var secret = RT(16);
