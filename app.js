@@ -45,6 +45,10 @@ app.use(function *exceptionHandler(next){
   }
 });
 
+router.get('/status', function *() {
+  this.body = "hi there."
+});
+
 router.get('/database', function *() {
   var key  = this.query._datav_id;
   var time = parseInt(this.query._datav_time);
@@ -84,7 +88,6 @@ graceful({
     console.error(err);
   }
 });
-
 
 function decrypt(data, time) {
   var vp = 60; // 一分钟有效期
