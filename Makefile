@@ -1,9 +1,23 @@
 install: pre_env start
 
-pre_env:
+clean:
+	@if [ -a ~/src/node-v4.4.5-linux-x64.tar.xz ]; then rm ~/src/node-v4.4.5-linux-x64.tar.xz; fi;
+	@if [ -a ~/src/node-v4.4.5-linux-x64.tar ]; then rm ~/src/node-v4.4.5-linux-x64.tar; fi;
+	@if [ -a ~/bin/node ]; then rm ~/bin/node; fi;
+	@if [ -a ~/bin/npm ]; then rm ~/bin/npm; fi;
+	@if [ -a ~/bin/pm2 ]; then rm ~/bin/pm2; fi;
+
+pre_env: clean
 	# 安装 node.js
-	@curl --silent --location https://rpm.nodesource.com/setup_4.x | bash -
-	@yum -y install nodejs
+	@if [ -d ~/bin ]; then echo ""; else mkdir ~/bin; fi;
+	@if [ -d ~/src ]; then echo ""; else mkdir ~/src; fi;
+	@cd ~/src ; wget http://datav.oss-cn-hangzhou.aliyuncs.com/uploads/node-v4.4.5-linux-x64.tar.xz
+	@if [ -d ~/src ]; then echo ""; else mkdir ~/src; fi;
+	@cd ~/src ; xz -d node-v4.4.5-linux-x64.tar.xz
+	@cd ~/src ; tar xvf node-v4.4.5-linux-x64.tar
+	@cd ~/bin ; ln -s ../src/node-v4.4.5-linux-x64/bin/node node
+	@cd ~/bin ; ln -s ../src/node-v4.4.5-linux-x64/bin/npm npm
+	@npm config set prefix ~
 	# 初始化项目
 	@npm install
 	# 安装运维工具
