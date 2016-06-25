@@ -18,7 +18,9 @@ DataV 将 SQL 查询字符串和数据库 id 加密后传到这个应用，而�
 ### 购买 ECS
 
 ![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs.png](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs.png)
+
 如下图所示，在“镜像”中选择“公共镜像” => CentOS 7.0 64位。如果没有特殊需求不需要数据盘，带宽建议按流量付费。（参考价格：这样的配置每月￥45，公网流量费用￥0.8/GB）
+
 ![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs_price.png](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs_price.png
 )
 
