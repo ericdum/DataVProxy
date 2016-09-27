@@ -35,6 +35,16 @@ class Mysql {
     this.ready(true);
   }
 
+  test() {
+    var self = this;
+    return function(cb) {
+      self.conn.query('show tables', function(err, data){
+        if(err) cb(null,err);
+        else cb(null,'connected');
+      })
+    }
+  }
+
   query(sql, values) {
     var self = this;
     return function(cb){

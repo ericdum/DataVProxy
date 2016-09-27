@@ -1,6 +1,8 @@
 "use strict"
 var config = require('../config');
 var os = require('os');
+var co = require('co');
+var Storage = require('../core/data_source/storage');
 
 var nc = os.networkInterfaces();
 var ip = '请查看阿里云 ECS 后台';
@@ -26,6 +28,17 @@ console.log(' Secret :', config.secret);
 console.log('已配置DB:');
 
 var i = 1;
-config.databases.forEach(function(db){
-  console.log('         ', (i++)+'=>', db.id)
+
+co(function*(){
+  for (var i in config.databases) {
+    var db = config.databases[i];
+    var storage = new Storage({config:{storage:db}});
+    var result = yield storage.test();
+    console.log('         ', db.id, '=>', result.toString())
+    ++i;
+  }
+}).catch(function(e){
+  console.error('=====', e);
 });
+
+setTimeout(function(){console.log(1)}, 30000)

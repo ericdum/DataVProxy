@@ -32,6 +32,10 @@ class Storage extends Base{
   *query(sql, data, callback) {
     return yield this.storage.query(sql, data, callback);
   }
+
+  *test() {
+    return yield this.storage.test();
+  }
 }
 
 module.exports = Storage;
