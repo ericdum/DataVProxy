@@ -17,9 +17,12 @@ DataV 将 SQL 查询字符串和数据库 id 加密后传到这个应用，而�
 
 ### 购买 ECS
 
-![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs.jpg](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs.jpg)
+![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs.png](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs.png)
+
 如下图所示，在“镜像”中选择“公共镜像” => CentOS 7.0 64位。如果没有特殊需求不需要数据盘，带宽建议按流量付费。（参考价格：这样的配置每月￥45，公网流量费用￥0.8/GB）
-![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs_price.jpg](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs_price.jpg)
+
+![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs_price.png](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs_price.png
+)
 
 ### 部署代码、启动服务
 
@@ -34,7 +37,7 @@ cd DataVProxy-master
 ```
 make install
 ```
-![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/output.jpg](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/output.jpg)
+![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/output.png](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/output.png)
 
 保留上图红框中的信息，下一步要用。如果忘记可以执行 `node ./bin/info.js` 来查看，如果需要变更 key 可用 `node ./bin/genkv.js` 来生成。
 
@@ -68,12 +71,12 @@ make install
 
 ### 配置到 DataV
 
-![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/db.jpg](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/db.jpg)
+![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/db.png](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/db.png)
 
 如图所示，在创建数据源的地方选择“自定义”类型，
 然后将前两步红圈中的信息填入输入框
 
-![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/sql.jpg](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/sql.jpg)
+![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/sql.png](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/sql.png)
 
 在数据配置的地方选择“数据库”类型，再选择刚才自定义的数据源就可以了。
 
