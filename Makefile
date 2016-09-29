@@ -7,7 +7,9 @@ clean:
 	@if [ -a ~/bin/npm ]; then rm ~/bin/npm; fi;
 	@if [ -a ~/bin/pm2 ]; then rm ~/bin/pm2; fi;
 
-pre_env: clean
+pre_env: nodejs_env deps pm2 logs ready clean
+
+nodejs_env:
 	# 安装 node.js
 	@if [ -d ~/bin ]; then echo ""; else mkdir ~/bin; fi;
 	@if [ -d ~/src ]; then echo ""; else mkdir ~/src; fi;
@@ -19,14 +21,22 @@ pre_env: clean
 	@cd ~/bin ; ln -s ../src/node-v4.4.5-linux-x64/bin/npm npm
 	@npm config set prefix ~
 	@npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+deps:
 	# 初始化项目
 	@cnpm install
+
+pm2:
 	# 安装运维工具
 	@cnpm install -g pm2
 	@pm2 install pm2-logrotate
+
+logs:
 	# 准备日志
 	@mkdir logs
 	@if [ -d "/etc/logrotate.d" ]; then sudo echo "$$PWD/logs/*.log { \r    rotate 12\r    daily\r    missingok\r    \r    notifempty\r    compress\r    delaycompress\/}" > /etc/logrotate.d/pm2-user; fi;
+
+ready:
 	# 生成 key & secret
 	@node ./bin/installkv.js
 	# 输出配置信息
