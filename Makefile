@@ -18,10 +18,11 @@ pre_env: clean
 	@cd ~/bin ; ln -s ../src/node-v4.4.5-linux-x64/bin/node node
 	@cd ~/bin ; ln -s ../src/node-v4.4.5-linux-x64/bin/npm npm
 	@npm config set prefix ~
+	@npm install -g cnpm --registry=https://registry.npm.taobao.org
 	# 初始化项目
-	@npm install
+	@cnpm install
 	# 安装运维工具
-	@npm install -g pm2
+	@cnpm install -g pm2
 	@pm2 install pm2-logrotate
 	# 准备日志
 	@mkdir logs
