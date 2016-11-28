@@ -24,6 +24,10 @@ DataV 将 SQL 查询字符串和数据库 id 加密后传到这个应用，而�
 ![https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs_price.png](https://raw.githubusercontent.com/ericdum/DataVProxy/master/res/ecs_price.png
 )
 
+### 查看版本
+
+版本号写在 package.json 的 version 字段中。[https://github.com/ericdum/DataVProxy/blob/master/package.json](https://github.com/ericdum/DataVProxy/blob/master/package.json)
+
 ### 部署代码、启动服务
 
 下载代码包
