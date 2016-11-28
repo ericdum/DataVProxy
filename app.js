@@ -8,6 +8,7 @@ var app        = require('koa')();
 var router     = require('koa-router')();
 var koaBody    = require('koa-body')();
 var crypto     = require('crypto');
+var pkgJSON    = require('./package.json');
 
 app.on('error', function (err) {
   console.error(err)
@@ -49,6 +50,10 @@ router.get('/status', function *() {
   this.body = "hi there."
 });
 
+router.get('/version', function *() {
+  this.body = pkgJSON.version;
+});
+
 router.get('/database', function *() {
   var key  = this.query._datav_id;
   var time = parseInt(this.query._datav_time);
@@ -68,6 +73,43 @@ router.get('/database', function *() {
       storage: db
     }
   }, this.query);
+})
+
+router.get('/get/databases', function *() {
+  var key  = this.query._datav_id;
+  var time = parseInt(this.query._datav_time);
+  try {
+    var data = decrypt(key, time);
+  } catch(e) {
+    return this.body={isError: true, message:"签名错误"};
+  }
+  var dbs = [];
+  if (data.action != 'getDatabases') return this.body={isError: true, message:"配置错误"};
+  this.body = {data: dbs};
+  config.databases.forEach(function(db){
+    dbs.push(db.id);
+  });
+})
+
+router.get('/test/connection', function *() {
+  var key  = this.query._datav_id;
+  var time = parseInt(this.query._datav_time);
+  try {
+    var data = decrypt(key, time);
+  } catch(e) {
+    return this.body={isError: true, message:"签名错误"};
+  }
+  if (data.action != 'connectTest') return this.body={isError: true, message:"配置错误"};
+  var db = findDB(data.db)
+  if (!db) return this.body={isError: true, message: "数据库不存在：" + data.db};
+  this.body = {
+    data: yield DataCenter.testConnection({
+      type: 'database',
+      config: {
+        storage: db
+      }
+    })
+  }
 })
 
 app.use(router.routes());
@@ -109,7 +151,6 @@ function decrypt(data, time) {
     return false;
   }
   data = cipherChunks.join('');
-  console.log(data);
   try {
     return JSON.parse(data);
   } catch(e) {

@@ -36,6 +36,10 @@ class Storage extends Base{
   *test() {
     return yield this.storage.test();
   }
+
+  *testConnection() {
+    return yield this.storage.testConnection();
+  }
 }
 
 module.exports = Storage;

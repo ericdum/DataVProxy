@@ -17,6 +17,7 @@ class Mysql {
       connectTimeout: 30000,
     });
 
+    this.db = config.database;
     this.connectCount = 0;
 
     this.conn.config.connectionConfig.queryFormat = function (query, values) {
@@ -63,6 +64,25 @@ class Mysql {
 
   end(){
     this.conn.end();
+  }
+
+  testConnection() {
+    var self = this;
+    return function(cb){
+      self.conn.getConnection(function(err, connection){
+        if (err)  {
+          var msg = err.toString()
+          if (msg.match('ER_BAD_DB_ERROR')) {
+            cb("未找到数据库："+self.db);
+          } else {
+            cb(msg);
+          }
+        } else {
+          connection.release();
+          cb(null, '连接成功');
+        }
+      })
+    }
   }
 }
 

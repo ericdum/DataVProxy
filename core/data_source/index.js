@@ -1,9 +1,6 @@
 "use strict"
 var drivers = {
-  //'static'  : require('./static'),
-  //'api'     : require('./remote'),
-  'database' : require('./storage'),
-  //'csv'     : require('./csv'),
+  'database' : require('./storage')
 };
 
 class DataFactory{
@@ -18,6 +15,15 @@ class DataFactory{
     var Driver = drivers[config.type];
     var model = new Driver(config);
     return yield model.get(query);
+  }
+
+  *testConnection(config) {
+    if (!drivers[config.type]) {
+      throw 'Wrong API Type: '+ JSON.stringify(config)
+    }
+    var Driver = drivers[config.type];
+    var model = new Driver(config);
+    return yield model.testConnection();
   }
 }
 
