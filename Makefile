@@ -7,7 +7,7 @@ clean:
 	@if [ -a ~/bin/npm ]; then rm ~/bin/npm; fi;
 	@if [ -a ~/bin/pm2 ]; then rm ~/bin/pm2; fi;
 
-pre_env: nodejs_env deps pm2 logs ready
+pre_env: clean nodejs_env deps pm2 logs ready
 
 nodejs_env:
 	# 安装 node.js
