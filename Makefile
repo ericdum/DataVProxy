@@ -29,7 +29,8 @@ deps:
 pm2:
 	# 安装运维工具
 	@cnpm install -g pm2
-	@pm2 install pm2-logrotate
+	#  由于 npm 经常不通，如有需要自行安装
+	#@pm2 install pm2-logrotate
 
 logs:
 	# 准备日志
