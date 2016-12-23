@@ -37,6 +37,7 @@ co(function*(){
     console.log('         ', db.id, '=>', result.toString())
     ++i;
   }
+  process.exit();
 }).catch(function(e){
   console.error('=====', e);
 });
