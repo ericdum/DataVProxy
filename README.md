@@ -16,10 +16,10 @@ DataV 增加了一个新的数据代理协议，旨在提供更安全的数据�
 4. 配置到 DataV
 
 ### 购买 ECS
-![p1](https://oss-cn-hangzhou.aliyuncs.com/yqfiles/81ce416318aa80c3b9ebd523c52a678787d8ba51.png)
+![p1](https://img.alicdn.com/tfs/TB1fdPgSpXXXXaFXXXXXXXXXXXX-755-648.png)
 如下图所示，在“镜像”中选择“公共镜像” => CentOS 7.0 64位。如果没有特殊需求不需要数据盘，带宽建议按流量付费。（参考价格：这样的配置每月￥45，公网流量费用￥0.8/GB）
 
-![p2](https://oss-cn-hangzhou.aliyuncs.com/yqfiles/1cfd3e4f788a0309a90e4fb0157d27bc31d24a37.png)
+![p2](https://img.alicdn.com/tfs/TB10DqtSpXXXXcCapXXXXXXXXXX-286-472.png)
 
 ### 部署代码、启动服务
 
@@ -34,7 +34,7 @@ cd DataVProxy-master
 ```
 make install
 ```
-![p3](https://oss-cn-hangzhou.aliyuncs.com/yqfiles/bdba8d3ff2dd14fca54b48fc734dc832313f6933.png)
+![p3](https://img.alicdn.com/tfs/TB10BK_SpXXXXabXpXXXXXXXXXX-652-380.png)
 保留上图红框中的信息，下一步要用。如果忘记可以执行 `node ./bin/info.js` 来查看，如果需要变更 key 可用 `node ./bin/genkv.js` 来生成。
 
 看到红框下面的输出的应用状态信息后，则表示启动成功了。
@@ -80,7 +80,7 @@ make install
 
 > 在有 HTTPS 服务之前，请确保 DATAV 页面是使用 HTTP 协议打开的。（这是浏览器为了保证https网站的安全性提供的策略）  
 >
-> ![WechatIMG1_jpeg](https://yqfile.alicdn.com/0e61638ec14951820273f3e0ff1c91e30e0c0f61.jpeg)
+> ![WechatIMG1_jpeg](https://img.alicdn.com/tfs/TB1RsaHSpXXXXawaXXXXXXXXXXX-629-183.jpg)
 
 ### 运维
 
