@@ -4,7 +4,8 @@ var Base   = require('../../base');
 var drivers = {
   'mysql': require('./mysql'),
   'rds': require('./mysql'),
-  'ads': require('./mysql')
+  'ads': require('./mysql'),
+  'mssql': require('./sqlserver')
 };
 
 var pool = {};
