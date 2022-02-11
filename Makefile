@@ -20,7 +20,7 @@ nodejs_env:
 	@cd ~/bin ; ln -s ../src/node-v4.4.5-linux-x64/bin/node node
 	@cd ~/bin ; ln -s ../src/node-v4.4.5-linux-x64/bin/npm npm
 	@npm config set prefix ~
-	@npm install -g cnpm --registry=https://registry.npm.taobao.org
+	@npm install -g cnpm --registry=https://registry.npmmirror.com
 
 deps:
 	# 初始化项目
